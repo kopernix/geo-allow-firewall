@@ -8,6 +8,12 @@ set -euo pipefail
 # License: MIT
 # -----------------------------------------------------------------------------
 
+VERSION="1.0.0"
+
+if [[ "${1:-}" == "--version" ]]; then
+  echo "geo-allow-update.sh v${VERSION}"
+  exit 0
+fi
 
 # geo-allow-update.sh
 #
