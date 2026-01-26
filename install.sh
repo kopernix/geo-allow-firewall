@@ -18,6 +18,14 @@ if [[ "${#COUNTRIES[@]}" -eq 0 ]]; then
   COUNTRIES=("es")
 fi
 
+need_cmd() { command -v "$1" >/dev/null 2>&1 || { echo "ERROR: missing dependency: $1" >&2; exit 1; }; }
+
+need_cmd iptables
+need_cmd ipset
+need_cmd curl
+need_cmd grep
+need_cmd tr
+
 SCRIPT_SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/geo-allow-update.sh"
 SCRIPT_DST="/usr/local/sbin/geo-allow-update.sh"
 
