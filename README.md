@@ -51,7 +51,7 @@ One CIDR per line. Comments start with `#`.
 ## Verify
 Check if an IP is allowed:
 ```bash
-ipset test geo_allow 92.177.225.32 && echo OK || echo BLOCKED
+ipset test geo_allow 8.8.8.8 && echo OK || echo BLOCKED
 ```
 
 View counters:
