@@ -10,6 +10,22 @@ set -euo pipefail
 # Usage:
 #   sudo ./uninstall.sh
 
+
+echo "⚠️  WARNING: Uninstall procedure not fully tested"
+echo
+echo "This uninstall script is still pending enough real-world verification and testing."
+echo "It may remove firewall rules (iptables/ipset) that could impact connectivity to this server."
+echo
+echo "✅ Recommended: EXIT now and rollback manually if you are not 100% sure."
+echo
+read -r -p "Do you want to continue with the uninstall? (yes/NO): " answer
+case "${answer,,}" in
+  yes) echo "Continuing..." ;;
+  *) echo "Aborted. No changes were made."; exit 0 ;;
+esac
+
+
+
 CHAIN="GEO_ALLOW_ONLY"
 SET="geo_allow"
 TMP="geo_allow_tmp"
