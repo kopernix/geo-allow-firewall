@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+
+# -----------------------------------------------------------------------------
+# Project: geo-allow-firewall
+# Author:  Joan Puiggalí (Kopernix)
+# GitHub:  https://github.com/kopernix/geo-allow-firewall
+# License: MIT
+# -----------------------------------------------------------------------------
+
 set -euo pipefail
 
 # Installer for geo-allow-firewall

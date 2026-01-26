@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# -----------------------------------------------------------------------------
+# Project: geo-allow-firewall
+# Author:  Joan Puiggalí (Kopernix)
+# GitHub:  https://github.com/kopernix/geo-allow-firewall
+# License: MIT
+# -----------------------------------------------------------------------------
+
 # OLD Legacy simple verion
 #
 # Usage:

@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# -----------------------------------------------------------------------------
+# Project: geo-allow-firewall
+# Author:  Joan Puiggalí (Kopernix)
+# GitHub:  https://github.com/kopernix/geo-allow-firewall
+# License: MIT
+# -----------------------------------------------------------------------------
+
 # Uninstaller for geo-allow-firewall
 # - Removes iptables hooks for 80/443
 # - Deletes GEO_ALLOW_ONLY chain
