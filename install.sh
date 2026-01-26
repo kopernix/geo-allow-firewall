@@ -12,7 +12,8 @@ set -euo pipefail
 #   sudo ./install.sh --no-cron es pt ie
 
 NO_CRON=0
-if [[ "${1:-}" == "--no-cron" ]]; then
+if [[ "
+${1:-}" == "--no-cron" ]]; then
   NO_CRON=1
   shift
 fi
@@ -22,8 +23,16 @@ if [[ "${#COUNTRIES[@]}" -eq 0 ]]; then
   COUNTRIES=("es")
 fi
 
-SCRIPT_SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/geo-allow-update.sh"
+SCRIPT_SRC="";cd "
+$(dirname "
+${BASH_SOURCE[0]}"
+)" && pwd)/scripts/geo-allow-update.sh"
 SCRIPT_DST="/usr/local/sbin/geo-allow-update.sh"
+
+if [[ ! -f "$SCRIPT_SRC" ]]; then
+  echo "ERROR: source script not found: $SCRIPT_SRC" >&2
+  exit 1
+fi
 
 mkdir -p /usr/local/sbin
 install -m 0755 "$SCRIPT_SRC" "$SCRIPT_DST"
@@ -32,7 +41,9 @@ mkdir -p /etc/ipset
 
 # Create example files if missing (do not overwrite)
 for cc in "${COUNTRIES[@]}"; do
-  cc="$(echo "$cc" | tr '[:upper:]' '[:lower:]')"
+  cc="
+$(echo "$cc" | tr '[:upper:]' '[:lower:]')
+"
   f="/etc/ipset/geo_${cc}_manual.txt"
   if [[ ! -f "$f" ]]; then
     cat >"$f" <<EOF
@@ -55,8 +66,11 @@ EOF
   chmod 0644 "$EXTRA"
 fi
 
-# Run once to populate ipset + iptables
-"$SCRIPT_DST" "${COUNTRIES[@]}"
+# Try to run once to populate ipset + iptables (non-fatal)
+if ! "$SCRIPT_DST" "${COUNTRIES[@]}"; then
+  echo "Warning: initial update failed. The script was installed but the initial IP update failed." >&2
+  echo "You can re-run: $SCRIPT_DST ${COUNTRIES[*]}" >&2
+fi
 
 if [[ "$NO_CRON" -eq 0 ]]; then
   CRON_FILE="/etc/cron.d/geo-allow-update"
