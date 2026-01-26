@@ -36,32 +36,32 @@ ipset create "$ALLOW_TMP" hash:net -exist
 ipset flush "$ALLOW_TMP"
 
 for cc in "${COUNTRIES[@]}"; do
-  cc="$(echo "$cc" | tr '[:upper:]' '[:lower:]')"
-  url="${BASE_URL}/${cc}-aggregated.zone"
-  manual="/etc/ipset/geo_${cc}_manual.txt"
-
-  curl -fsSL "$url"     | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$'     | while read -r net; do
-        ipset add "$ALLOW_TMP" "$net" -exist
-      done
-
-  if [[ -f "$manual" ]]; then
-    grep -Ev '^\s*($|#)' "$manual"       | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$'       | while read -r net; do
-          ipset add "$ALLOW_TMP" "$net" -exist
-        done
+  cc=""); then
+    true
   fi
-done
+
+  # Merge per-country manual ranges if there are any valid lines
+  if [[ -f "$manual" ]]; then
+    matches=$(grep -Ev '^
+  # Download country ranges: wrap pipeline in an if so the script doesn't exit when grep finds no matches
+  if curl -fsSL "$url" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$' | while read -r net; do
+       ipset add "$ALLOW_TMP" "$net" -exist
+     done; then
+    true
+  fi
+
+  # Merge per-country manual ranges if there are any valid lines
+  if [[ -f "$manual" ]]; then
+    matches=$(grep -Ev '^
+  fi
 
 EXTRA="/etc/ipset/geo_allow_extra.txt"
 
 if [[ -f "$EXTRA" ]]; then
-  grep -Ev '^\s*($|#)' "$EXTRA"     | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$'     | while read -r net; do
-        ipset add "$ALLOW_TMP" "$net" -exist
-      done
-fi
+  matches=$(grep -Ev '^
+  fi
 
-ipset swap "$ALLOW_TMP" "$ALLOW_SET"
-ipset flush "$ALLOW_TMP"
-
+# Ensure the iptables rules are set
 iptables -N "$CHAIN" 2>/dev/null || true
 iptables -F "$CHAIN"
 iptables -A "$CHAIN" -m set --match-set "$ALLOW_SET" src -j ACCEPT
