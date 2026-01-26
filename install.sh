@@ -39,7 +39,7 @@ for cc in "${COUNTRIES[@]}"; do
     cat >"$f" <<EOF
 # Manual ranges for country: ${cc}
 # One CIDR per line. Examples:
-# 92.177.0.0/16
+# 82.176.0.0/16
 EOF
     chmod 0644 "$f"
   fi
@@ -50,8 +50,8 @@ if [[ ! -f "$EXTRA" ]]; then
   cat >"$EXTRA" <<'EOF'
 # Global allowlist ranges (always allowed, regardless of country list)
 # One CIDR per line. Examples:
-# 92.177.0.0/16
-# 185.247.124.83/32
+# 82.176.0.0/16
+# 35.247.124.83/32
 EOF
   chmod 0644 "$EXTRA"
 fi
