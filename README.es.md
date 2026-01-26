@@ -70,5 +70,10 @@ sudo ./uninstall.sh
   - `https://www.ipdeny.com/ipblocks/data/aggregated/<cc>-aggregated.zone`
 - Las asignaciones GeoIP cambian; es recomendable dejar el cron de actualización.
 
+## TODO / Roadmap
+
+- [ ] Persistencia al reinicio sin necesidad de ejecutar `install.sh` (systemd service/timer o iptables/ipset-persistent).
+- [ ] Modo alternativo: denylist por países (bloquear países concretos en vez de allowlist).
+
 ## Licencia
 MIT
