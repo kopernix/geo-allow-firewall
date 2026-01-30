@@ -63,6 +63,16 @@ iptables -L GEO_ALLOW_ONLY -n -v
 ```bash
 sudo ./uninstall.sh
 ```
+or
+
+```bash
+sudo iptables -F GEO_ALLOW_ONLY 2>/dev/null || true
+sudo iptables -X GEO_ALLOW_ONLY 2>/dev/null || true
+sudo ipset destroy geo_allow 2>/dev/null || true
+sudo ipset destroy geo_allow_tmp 2>/dev/null || tru
+```
+and remove cron
+
 
 ## Notes / Caveats
 - This filters at L3/L4. It does **not** understand hostnames or URLs.

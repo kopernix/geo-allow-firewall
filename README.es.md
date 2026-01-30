@@ -37,6 +37,15 @@ sudo ./install.sh --no-cron es pt ie
 ```bash
 sudo /usr/local/sbin/geo-allow-update.sh es pt ie
 ```
+o
+
+```bash
+sudo iptables -F GEO_ALLOW_ONLY 2>/dev/null || true
+sudo iptables -X GEO_ALLOW_ONLY 2>/dev/null || true
+sudo ipset destroy geo_allow 2>/dev/null || true
+sudo ipset destroy geo_allow_tmp 2>/dev/null || tru
+```
+y borra cron
 
 ## Ficheros de allowlist
 - Por país:
